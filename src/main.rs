@@ -1,11 +1,6 @@
-mod songStruct;
+mod playlist_manager;
 
-use std::fs::File;
-use std::io::BufReader;
-use std::time::Duration;
-use rodio::{Decoder, OutputStream, Sink};
-use rodio::source::{SineWave, Source};
-use crate::songStruct::{Playlist, Song};
+use crate::playlist_manager::{Playlist, Song};
 
 fn main () {
 
