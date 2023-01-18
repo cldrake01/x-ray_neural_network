@@ -24,7 +24,7 @@ impl Song {
 impl Playlist {
     pub fn playlist(mut self, songs: &[Song]) {
         for song in songs {
-            self.songs.push(*song);
+            self.songs.push(song);
         }
     }
 
