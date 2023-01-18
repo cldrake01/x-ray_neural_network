@@ -5,18 +5,22 @@ use std::io::BufReader;
 use std::time::Duration;
 use rodio::{Decoder, OutputStream, Sink};
 use rodio::source::{SineWave, Source};
+use crate::songStruct::{Playlist, Song};
 
 fn main () {
-    let (_stream, stream_handle) = OutputStream::try_default().unwrap();
-    let sink = Sink::try_new(&stream_handle).unwrap();
 
-// Add a dummy source of the sake of the example.
-    let file = BufReader::new(File::open("/Users/collindrake/Downloads/Airborne_Grooves.wav").unwrap());
-// Decode that sound file into a source
-    let source = Decoder::new(file).unwrap();
-    sink.append(source);
+    let mut my_playlist = Playlist {
+        name: String::from("Something"),
+        songs: vec![],
+    };
 
-// The sound plays in a separate thread. This call will block the current thread until the sink
-// has finished playing all its queued sounds.
-    sink.sleep_until_end();
+    my_playlist.add(
+        Song {
+            plays: 0,
+            name: String::from("Air"),
+            path: String::from("/Users/collindrake/Downloads/Airborne_Grooves.wav")
+        }
+    );
+
+    my_playlist.play();
 }
