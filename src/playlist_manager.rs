@@ -24,10 +24,9 @@ impl Song {
         (self.plays, self.name.clone(), self.path.clone())
     }
 
-    pub fn play (self) {
-
+    pub fn play(self) {
         let (_stream, stream_handle) = OutputStream::try_default().unwrap();
-        let sink = Sink::try_new( & stream_handle).unwrap();
+        let sink = Sink::try_new(&stream_handle).unwrap();
 
         // Add a dummy source of the sake of the example.
         let file = BufReader::new(File::open(self.path).unwrap());
@@ -38,14 +37,13 @@ impl Song {
         // The sound plays in a separate thread. This call will block the current thread until the sink
         // has finished playing all its queued sounds.
         sink.sleep_until_end();
-
     }
 }
 
 impl Playlist {
-    pub fn playlist(mut self, songs: Vec<Song>) {
+    pub fn new(&mut self, songs: Vec<Song>) {
         for song in songs {
-            self.songs.push(song);
+            self.add(song);
         }
     }
 
@@ -53,9 +51,17 @@ impl Playlist {
         self.songs.push(new_song);
     }
 
-    pub fn play (self) {
+    pub fn play(self) {
         for _song in self.songs {
             _song.play();
+        }
+    }
+
+    pub fn play_search(self, song: &str) {
+        for _song in self.songs {
+            if _song.name == song {
+                _song.play();
+            }
         }
     }
 }
